@@ -36,9 +36,9 @@
     <!-- DATABASE CONFIG -->
 
     <!--<entry key='database.driverFile'>hsqldb.jar</entry>-->
-    <entry key='database.driver'>org.h2.Driver</entry>
-    <entry key='database.url'>jdbc:h2:./target/database</entry>
-    <entry key='database.user'>sa</entry>
+    <entry key='database.driver'>com.mysql.jdbc.Driver</entry>
+    <entry key='database.url'>jdbc:mysql://127.0.0.1:3306/traccar_eco?allowMultiQueries=true&amp;autoReconnect=true&amp;useUnicode=yes&amp;characterEncoding=UTF-8</entry>
+    <entry key='database.user'>root</entry>
     <entry key='database.password'></entry>
     <entry key='database.mock'>true</entry>
     <entry key='database.xml'>false</entry>
@@ -46,7 +46,7 @@
     <entry key='database.checkTable'>traccar</entry>
 
     <entry key='database.createSchema'>
-        CREATE TABLE "user" (
+        CREATE TABLE `user` (
         id INT PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(128) NOT NULL,
         email VARCHAR(128) NOT NULL UNIQUE,
@@ -76,7 +76,7 @@
         deviceId INT NOT NULL,
         "read" BIT DEFAULT 1 NOT NULL,
         "write" BIT DEFAULT 1 NOT NULL,
-        FOREIGN KEY (userId) REFERENCES "user" (id) ON DELETE CASCADE,
+        FOREIGN KEY (userId) REFERENCES `user` (id) ON DELETE CASCADE,
         FOREIGN KEY (deviceId) REFERENCES device (id) ON DELETE CASCADE);
 
         CREATE TABLE position (
@@ -151,26 +151,26 @@
     </entry>
 
     <entry key='database.loginUser'>
-        SELECT * FROM "user"
+        SELECT * FROM `user`
         WHERE email = :email;
     </entry>
 
     <entry key='database.selectUser'>
-        SELECT * FROM "user"
+        SELECT * FROM `user`
         WHERE id = :id;
     </entry>
 
     <entry key='database.selectUsersAll'>
-        SELECT * FROM "user";
+        SELECT * FROM `user`;
     </entry>
 
     <entry key='database.insertUser'>
-        INSERT INTO "user" (name, email, hashedPassword, salt, admin)
+        INSERT INTO `user` (name, email, hashedPassword, salt, admin)
         VALUES (:name, :email, :hashedPassword, :salt, :admin);
     </entry>
 
     <entry key='database.updateUser'>
-        UPDATE "user" SET
+        UPDATE `user` SET
         name = :name,
         email = :email,
         admin = :admin,
@@ -185,11 +185,11 @@
     </entry>
 
     <entry key='database.updateUserPassword'>
-        UPDATE "user" SET hashedPassword = :hashedPassword, salt = :salt WHERE id = :id;
+        UPDATE `user` SET hashedPassword = :hashedPassword, salt = :salt WHERE id = :id;
     </entry>
     
     <entry key='database.deleteUser'>
-        DELETE FROM "user" WHERE id = :id;
+        DELETE FROM `user` WHERE id = :id;
     </entry>
 
     <entry key='database.getPermissionsAll'>
@@ -271,7 +271,8 @@
     <entry key='mta6.port'>5028</entry>
     <entry key='tzone.port'>5029</entry>
     <entry key='tlt2h.port'>5030</entry>
-    <entry key='taip.port'>5031</entry>
+    <!--<entry key='taip.port'>5031</entry>-->
+    <entry key='taip.port'>4097</entry>
     <entry key='wondex.port'>5032</entry>
     <entry key='cellocator.port'>5033</entry>
     <entry key='galileo.port'>5034</entry>
